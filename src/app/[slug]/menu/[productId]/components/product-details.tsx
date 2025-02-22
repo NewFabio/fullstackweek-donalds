@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatCurrency } from "@/helpers/format-currency";
 
 interface ProductDetailsProps {
@@ -30,9 +31,9 @@ const ProductDetails = ({product}: ProductDetailsProps) => {
         setQuantity((prev) => prev + 1);
     };
     return ( 
-        <div className="relative z-50 roudend-t-3xl mt-[-1.5rem] p-5 flex-auto flex flex-col">
+        <div className="relative z-50 roudend-t-3xl mt-[-1.5rem] p-5 flex-auto flex flex-col overflow-hidden">
            {/* restaurante */}
-            <div className="flex-auto">
+            <div className="flex-auto overflow-hidden">
             <div className="flex items-center gap-1.5">
                 <Image src={product.restaurant.avatarImageUrl} alt={product.restaurant.name} width={16} height={16} className="rounded-full"/>
                 <p className="text-xs text-muted-foreground ">{product.restaurant.name}</p>
@@ -40,7 +41,7 @@ const ProductDetails = ({product}: ProductDetailsProps) => {
             {/* nome do produto */}
             <h2 className="text-xl font-semibold mt-1">{product.name}</h2>
             {/* preço e quantidade */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-3">
                 <h3 className="text-xl font-semibold">{formatCurrency(product.price)}</h3>
                 <div className="flex items-center gap-3 text-center">
                     <Button variant="outline" className="h-8 w-8 roudend-xl" onClick={handleDecreaseQuantity}>
@@ -53,6 +54,7 @@ const ProductDetails = ({product}: ProductDetailsProps) => {
                 </div>
             </div>
             {/* sobre */}
+            <ScrollArea className="h-full">
             <div className="mt-6 space-y-3">
                 <h4 className="font-semibold">Sobre</h4>
                 <p className="text-sm text-muted-foreground">{product.description}</p>
@@ -63,8 +65,11 @@ const ProductDetails = ({product}: ProductDetailsProps) => {
                 <ChefHatIcon />
                 <h4 className="font-semibold">Ingredientes</h4>
                 </div>
-                <p className="text-sm text-muted-foreground">{product.description}</p>
+                <ul className="list-disc px-5 text-sm text-muted-foreground">
+                    {product.ingredients.map(ingredient => <li key={ingredient}>{ingredient}</li>)}
+                </ul>
             </div>
+            </ScrollArea>
             </div>
             {/* add na sacola */}
             <Button className="w-full roudend-full mt-6">Adicionar à sacola</Button>
