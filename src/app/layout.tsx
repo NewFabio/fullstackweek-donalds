@@ -3,7 +3,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
-import { CartProvider } from "./[slug]/menu/contexts/page";
+import { Toaster } from "@/components/ui/sonner";
+
+import { CartProvider } from "./[slug]/menu/contexts/cart";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -12,7 +14,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "FSW Donalds",
-  description: "Bora finalizar este projeto",
+  description: "Bora finalizar esse projeto lindo!",
 };
 
 export default function RootLayout({
@@ -23,9 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <CartProvider>{children}</CartProvider>
+
+        <Toaster/>
       </body>
     </html>
   );
